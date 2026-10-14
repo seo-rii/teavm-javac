@@ -277,9 +277,12 @@ public final class Compiler {
                 .setStrict(strictMode)
                 .build();
         teavm.setOptimizationLevel(TeaVMOptimizationLevel.ADVANCED);
-        new JSOPlugin().install(teavm);
         new PlatformPlugin().install(teavm);
+        // JCLPlugin must precede JSOPlugin: its PlatformMarkerSupport removes JavaScript-only branches
+        // (e.g. TCharBuffer.wrap calling Uint16Array.fromJavaArray(@JSByRef)) before JSO validation rejects
+        // them as unsupported in Wasm GC.
         new JCLPlugin().install(teavm);
+        new JSOPlugin().install(teavm);
         teavm.setEntryPoint(mainClass);
         target.setObfuscated(false);
         target.setDebugInfoLocation(WasmDebugInfoLocation.EMBEDDED);
