@@ -169,7 +169,7 @@ artifacts.add("dist", createDist)
 def testHarnessDir = project.layout.buildDirectory.dir("test-harness")
 
 def prepareTestHarness = tasks.register("prepareTestHarness", Sync) {
-    dependsOn generateWasmGC
+    dependsOn buildWasmGC
     from("src/test/js")
     from(layout.buildDirectory.dir("generated/teavm/wasm-gc")) {
         include "compiler.wasm*"
