@@ -280,6 +280,7 @@ public final class Compiler {
         new JSOPlugin().install(teavm);
         new PlatformPlugin().install(teavm);
         new JCLPlugin().install(teavm);
+        teavm.add(new PluggableDependencySupport());
         teavm.setEntryPoint(mainClass);
         target.setObfuscated(false);
         target.setDebugInfoLocation(WasmDebugInfoLocation.EMBEDDED);
